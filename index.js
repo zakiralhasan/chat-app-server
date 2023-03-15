@@ -19,7 +19,6 @@ const io = new Server(server, {  //prevent CORS policy
 io.on('connection', (socket) => {
     console.log('New user conntected.', socket.id)  //used for monitoring new connected users
 
-
     socket.on('chatMsg', (data) => {
         socket.emit('receiveMsg', data)  //send user sending message to client side
         socket.broadcast.emit('brodcastMsg', data)  //send all message without new sending message to client side
