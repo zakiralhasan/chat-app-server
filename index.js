@@ -1,16 +1,17 @@
-const express = require('express')
-const app = express()
-const http = require('http')
-const cors = require('cors')
+const express = require('express');
+const app = express();
+const http = require('http');
+const cors = require('cors');
 
-const port = process.env.PORT || 5000;  // server port
+const port = 5000;  // server port
 
 app.use(cors());  //prevent CORS policy
-app.use(express.json)  //to get json data
+app.use(express.json);  //to get json data
 
 //below code for creating socket server
-const { Server } = require('socket.io')
-const server = http.createServer(app)
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+server.setTimeout(120000);
 const io = new Server(server, {  //prevent CORS policy
     cors: { origin: "*" },
 });
@@ -27,13 +28,13 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('User disconnect')  //used for monitoring disconnected users
     })
-})
+});
 
 app.get("/", (req, res) => {
     res.send("server is running");  //used for monitoring node API is working or not
-})
+});
 
 //code for server running
 server.listen(port, () => {
     console.log('server is running on port:', port)  //used for monitoring node server is running or not
-})
+});
