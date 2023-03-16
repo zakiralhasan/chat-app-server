@@ -3,7 +3,7 @@ const app = express();
 const http = require('http');
 const cors = require('cors');
 
-const port = 5000;  // server port
+const port = process.env.PORT || 5000;  // server port
 
 app.use(cors());  //prevent CORS policy
 app.use(express.json);  //to get json data
@@ -11,7 +11,7 @@ app.use(express.json);  //to get json data
 //below code for creating socket server
 const { Server } = require('socket.io');
 const server = http.createServer(app);
-server.setTimeout(120000);
+
 const io = new Server(server, {  //prevent CORS policy
     cors: { origin: "*" },
 });
